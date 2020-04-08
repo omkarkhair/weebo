@@ -9,6 +9,8 @@
   "author": "Omkar Khair",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^8.2.0",
+    "mjpeg-camera": "^2.0.0",
     "onoff": "^5.0.1",
     "socket.io-client": "^2.3.0"
   }

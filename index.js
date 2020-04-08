@@ -1,5 +1,25 @@
+require('dotenv').config()
 const { Gpio } = require( 'onoff' );
-var socket = require('socket.io-client')('http://localhost:3000');
+var socket = require('socket.io-client')(process.env.WEEBO_SERVER);
+
+var MjpegCamera = require('mjpeg-camera');
+
+// Create an MjpegCamera instance
+var camera = new MjpegCamera({
+  name: 'weebo-cam',
+  url: 'http://localhost:8081/'
+});
+
+// As frames come in, emit them in socket.io
+camera.on('data', function(frame) {
+//  console.log("Camera frame ready")
+  if (socket.connected) {
+    socket.emit('frame', frame.data.toString('base64'))
+  }
+});
+
+// Start streaming
+camera.start();
 
 // set BCM 4 pin as 'output'
 const in1 = new Gpio('4', 'out')
