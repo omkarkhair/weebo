@@ -12,7 +12,7 @@ var camera = new MjpegCamera({
 
 // As frames come in, emit them in socket.io
 camera.on('data', function(frame) {
-//  console.log("Camera frame ready")
+  console.log("Camera frame ready")
   if (socket.connected) {
     socket.emit('frame', frame.data.toString('base64'))
   }
@@ -20,6 +20,7 @@ camera.on('data', function(frame) {
 
 // Start streaming
 camera.start();
+console.log("Camera started")
 
 // set BCM 4 pin as 'output'
 const in1 = new Gpio('4', 'out')
